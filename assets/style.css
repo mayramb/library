@@ -68,7 +68,6 @@ h1.big span { background: var(--gradient); -webkit-background-clip: text; -webki
 /* CTA */
 .cta { margin-top: 4rem; padding: 2.5rem; border-radius: 4px; position: relative; background: rgba(255,255,255,0.03); border: 1px solid rgba(230,0,126,0.3); }
 .cta { overflow: hidden; }
-.cta-marca { position: absolute; right: 2rem; top: 50%; transform: translateY(-50%); height: 70%; opacity: 0.9; pointer-events: none; }
 .cta h3 { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.03em; margin-bottom: 0.5rem; }
 .cta p { color: var(--muted); margin-bottom: 1.5rem; }
 .cta .btns { display: flex; gap: 1rem; flex-wrap: wrap; }
@@ -104,7 +103,7 @@ footer a:hover { color: var(--fuchsia); }
 
 @media (max-width: 760px) {
   .hero { grid-template-columns: 1fr; } .hero-img { justify-self: start; max-width: 260px; margin-bottom: 2rem; order: -1; }
-  .cta-marca { height: 40%; top: 1.5rem; transform: none; opacity: 0.25; }
+
   nav { padding: 1rem 1.4rem; } nav ul { gap: 1.2rem; }
   .wrap { padding: 3rem 1.4rem; } footer { padding: 1.5rem 1.4rem; }
 }
