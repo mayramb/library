@@ -8,6 +8,7 @@ Guías, ideas y reflexiones sobre tecnología, trabajo, cambio y lo que vaya sur
 
 | # | Guía | Para qué sirve |
 |---|---|---|
+| 00 | [📕 Transformación Digital: El Juego Que Muchos Pierden](./libro-transformacion-digital/) | Mi libro · [Amazon](https://www.amazon.es/dp/B0H88KRSXC) |
 | 01 | [Búsqueda de empleo en piloto automático](./busqueda-empleo-ia/) | Claude busca ofertas a diario, filtra, adapta tu CV y lo registra en Excel |
 | 02 | [Difusión de la innovación](./difusion-innovacion/) | Cómo se propaga el cambio en una organización |
 
@@ -19,6 +20,7 @@ library/
 ├── catalogo.json       ← lista de guías (aquí se añade cada guía nueva)
 ├── assets/style.css    ← diseño común
 ├── _plantilla/         ← copiar para crear una guía nueva
+├── libro-transformacion-digital/  ← página del libro
 ├── difusion-innovacion/  ← página propia (no usa el visor)
 └── busqueda-empleo-ia/
     ├── index.html      ← visor (copia de _plantilla, no se edita)

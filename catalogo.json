@@ -1,16 +1,34 @@
 [
   {
+    "titulo": "Transformación Digital: El Juego Que Muchos Pierden",
+    "descripcion": "Mi libro. Por qué llevamos 30 años comprando herramientas y repitiendo los mismos errores, y cómo dejar de perder.",
+    "link": "libro-transformacion-digital/",
+    "etiquetas": [
+      "Libro",
+      "Transformación",
+      "PyMEs"
+    ],
+    "fecha": "2026"
+  },
+  {
     "titulo": "Tu búsqueda de empleo en piloto automático",
     "descripcion": "Claude busca ofertas cada día, las filtra con tus criterios, adapta tu CV y lo registra todo en un Excel.",
     "link": "busqueda-empleo-ia/",
-    "etiquetas": ["IA", "Empleo", "Básico"],
+    "etiquetas": [
+      "IA",
+      "Empleo",
+      "Básico"
+    ],
     "fecha": "2026-11"
   },
   {
     "titulo": "Difusión de la innovación",
     "descripcion": "Cómo se propaga el cambio en una organización (Rogers, 1962) y qué significa para adoptar IA y datos.",
     "link": "difusion-innovacion/",
-    "etiquetas": ["Cambio", "Estrategia"],
+    "etiquetas": [
+      "Cambio",
+      "Estrategia"
+    ],
     "fecha": "2026-06"
   }
 ]

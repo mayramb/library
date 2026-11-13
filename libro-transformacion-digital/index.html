@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Transformación Digital: El Juego Que Muchos Pierden | Mayra Bastidas</title>
+  <meta name="description" content="Excel gana porque nadie arregló los cimientos. Un libro de negocio sobre por qué las transformaciones digitales fallan y cómo dejar de perder." />
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
+  <style>
+    :root {
+      --amber: #FFA500;
+      --navy-0: #0A0A1A; --navy-1: #1A1A2E; --navy-2: #0F1A35;
+      --card: #0F0F1F; --line: rgba(255,165,0,0.18);
+      --text: rgba(255,255,255,0.86); --muted: rgba(255,255,255,0.62);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      background: var(--navy-0); color: var(--text); line-height: 1.6; }
+    a { color: inherit; }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 1.5rem; }
+    section { padding: 5rem 0; }
+    .eyebrow { display: inline-block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--amber); border: 1px solid var(--line); border-radius: 999px; padding: 0.4rem 1rem; margin-bottom: 1.4rem; }
+    h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; color: #fff; line-height: 1.15; margin-bottom: 1rem; }
+    .sub { color: var(--muted); max-width: 680px; font-size: 1.05rem; }
+    .center { text-align: center; } .center .sub { margin: 0 auto; }
+    .btn { display: inline-block; background: var(--amber); color: #000; font-weight: 800; text-decoration: none; letter-spacing: 0.05em;
+      padding: 1rem 2.2rem; border-radius: 4px; transition: transform .2s, box-shadow .2s; }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(255,165,0,0.35); }
+    .back { position: fixed; top: 14px; left: 14px; z-index: 50; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+      text-decoration: none; color: #fff; background: rgba(10,10,26,.85); border: 1px solid var(--line); padding: 6px 12px; border-radius: 3px; }
+    .back:hover { color: var(--amber); }
+
+    /* HERO */
+    .hero { background: linear-gradient(135deg, var(--navy-0) 0%, var(--navy-1) 50%, var(--navy-2) 100%); padding: 7rem 0 5rem; }
+    .hero-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 3rem; align-items: center; }
+    .hero h1 { font-size: clamp(2.6rem, 6vw, 4rem); font-weight: 900; color: #fff; line-height: 1.05; }
+    .hero .tagline { font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 600; color: var(--amber); margin: 0.6rem 0 1.4rem; }
+    .hook { color: var(--amber); font-style: italic; font-weight: 600; margin-bottom: 1rem; }
+    .hero p.desc { color: var(--muted); margin-bottom: 2rem; max-width: 560px; }
+    .cover { justify-self: center; width: 260px; aspect-ratio: 3/4; border-radius: 6px; padding: 2rem 1.6rem; text-align: center;
+      display: flex; flex-direction: column; justify-content: center; gap: 0.8rem;
+      background: linear-gradient(145deg, #0F1A2E, #1A2A4E); border-left: 5px solid var(--amber);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.55); transform: rotate(-2deg); }
+    .cover b { font-size: 1.5rem; font-weight: 800; color: #fff; line-height: 1.15; }
+    .cover i { color: var(--amber); font-size: 0.95rem; }
+    .cover hr { width: 40px; border: none; height: 2px; background: var(--amber); margin: 0.8rem auto; }
+    .cover small { color: var(--muted); }
+
+    /* STATS */
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .stat { background: var(--card); padding: 2rem 1.2rem; text-align: center; }
+    .stat b { display: block; font-size: 2.2rem; font-weight: 900; color: var(--amber); }
+    .stat span { display: block; color: #fff; font-size: 0.92rem; margin: 0.3rem 0; }
+    .stat small { color: var(--muted); font-size: 0.75rem; }
+
+    /* PATTERN */
+    .steps { list-style: none; max-width: 640px; margin: 2rem auto; }
+    .steps li { display: flex; gap: 1rem; padding: 0.9rem 1.2rem; margin: 0.6rem 0; background: var(--card); border: 1px solid var(--line); border-radius: 4px; text-align: left; }
+    .steps li::before { content: '→'; color: var(--amber); font-weight: 800; }
+    .steps li:last-child { border-color: var(--amber); color: #fff; font-weight: 600; }
+    .quotes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-top: 2.5rem; }
+    .quote { background: var(--card); border-left: 3px solid var(--amber); padding: 1.5rem; border-radius: 0 4px 4px 0; text-align: left; }
+    .quote q { color: #fff; font-size: 1.05rem; font-weight: 600; }
+    .quote p { color: var(--muted); font-size: 0.9rem; margin-top: 0.6rem; }
+
+    /* AUDIENCE / CHAPTERS / WHY */
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2.5rem; }
+    .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-top: 2.5rem; }
+    .box { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 1.8rem; }
+    .box h3 { color: #fff; font-size: 1.15rem; margin-bottom: 0.8rem; }
+    .box ul { list-style: none; } .box li { padding: 0.35rem 0 0.35rem 1.4rem; position: relative; color: var(--muted); }
+    .box li::before { content: '✓'; position: absolute; left: 0; color: var(--amber); }
+    .emoji { font-size: 1.8rem; display: block; margin-bottom: 0.6rem; }
+    .box p { color: var(--muted); font-size: 0.95rem; }
+    .chap small { color: var(--amber); font-weight: 800; letter-spacing: 0.15em; font-size: 0.72rem; }
+    .chap h3 { margin-top: 0.4rem; }
+    .alt { background: linear-gradient(180deg, var(--navy-0), var(--navy-1)); }
+
+    /* AUTHOR */
+    .author { display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: start; }
+    .author h3 { font-size: 1.8rem; color: #fff; font-weight: 800; }
+    .author .role { color: var(--amber); font-weight: 600; margin: 0.4rem 0 1rem; }
+    .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
+    .chip { font-size: 0.75rem; padding: 0.3rem 0.8rem; border: 1px solid var(--line); border-radius: 999px; color: var(--amber); }
+
+    /* FINAL */
+    .final { background: linear-gradient(135deg, var(--navy-2), var(--navy-1)); text-align: center; }
+    .final p.avail { color: var(--muted); margin-top: 1rem; font-size: 0.9rem; }
+    footer { padding: 2rem 0; text-align: center; font-size: 0.8rem; color: var(--muted); border-top: 1px solid var(--line); }
+    footer a { color: var(--amber); text-decoration: none; }
+
+    @media (max-width: 820px) {
+      .hero-grid, .grid2, .author { grid-template-columns: 1fr; }
+      .grid3, .quotes { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: 1fr 1fr; }
+      .cover { width: 200px; }
+    }
+  </style>
+</head>
+<body>
+  <a class="back" href="../">← Library</a>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">Libro de negocio · 2026</span>
+        <h1>Transformación Digital</h1>
+        <div class="tagline">El Juego Que Muchos Pierden</div>
+        <p class="hook">Excel gana porque nadie arregló los cimientos.<br>Aquí revisaremos cómo dejar de perder.</p>
+        <p class="desc">Desde los ERPs de los años 90 hasta la IA de hoy, llevamos más de 20 años comprando herramientas y cometiendo los mismos errores. Este libro no es otro manual de tecnología, es la guía honesta para tomar mejores decisiones antes de firmar el próximo contrato.</p>
+        <a class="btn" href="https://www.amazon.es/dp/B0H88KRSXC" target="_blank" rel="noopener">Ver el libro →</a>
+      </div>
+      <div class="cover" aria-label="Portada del libro">
+        <b>Transformación Digital</b>
+        <i>El Juego Que Muchos Pierden</i>
+        <hr />
+        <small>Mayra Bastidas<br>2026</small>
+      </div>
+    </div>
+  </header>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat"><b>70–90%</b><span>de transformaciones no entregan lo prometido</span><small>McKinsey, múltiples estudios</small></div>
+    <div class="stat"><b>$9.5M</b><span>costo promedio de una implementación fallida en 2023</span><small>MuleSoft 2023</small></div>
+    <div class="stat"><b>58%</b><span>de los fracasos vienen de gobernanza, no de tecnología</span><small>Forrester 2024</small></div>
+    <div class="stat"><b>30</b><span>años repitiendo el mismo ciclo con herramientas distintas</span><small>ERP → CRM → BI → IA</small></div>
+  </div>
+
+  <!-- PATRÓN -->
+  <section class="center">
+    <div class="wrap">
+      <span class="eyebrow">El patrón que se repite</span>
+      <h2>¿Te suena familiar esta historia?</h2>
+      <p class="sub">No importa el año ni la herramienta. La secuencia es siempre la misma.</p>
+      <ul class="steps">
+        <li>La competencia está usando algo nuevo y hay que adoptarlo ya</li>
+        <li>Se compra la herramienta. Se implementa. Se entrena al equipo.</li>
+        <li>La adopción no llega. "La herramienta es muy complicada."</li>
+        <li>Se culpa a la herramienta. Se busca la siguiente.</li>
+        <li>Y mientras tanto, todo el mundo sigue usando Excel.</li>
+      </ul>
+      <div class="quotes">
+        <div class="quote"><q>Quiero un Dashboard.</q><p>La frase que inicia el 80% de los proyectos que terminan mal</p></div>
+        <div class="quote"><q>La herramienta está muy buena... pero mira este Excel que construí yo. Este muestra más cosas.</q><p>Y muchas veces tiene razón. El Excel es mejor.</p></div>
+        <div class="quote"><q>El problema no fue la herramienta. Fue que nadie decidió realmente qué problema iba a resolver.</q><p>Mayra Bastidas</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARA QUIÉN -->
+  <section class="alt center">
+    <div class="wrap">
+      <span class="eyebrow">¿Para quién es este libro?</span>
+      <h2>Para ti, sin importar de qué lado estás</h2>
+      <p class="sub">Los patrones que analiza este libro aparecen igual en empresas de 5 personas que en multinacionales de 5,000.</p>
+      <div class="grid2" style="text-align:left">
+        <div class="box"><span class="emoji">🏢</span><h3>Tienes o diriges una PyME</h3><ul>
+          <li>Alguien te vendió una herramienta que "lo iba a resolver todo"</li>
+          <li>Tu equipo tiene dos sistemas: el oficial y el Excel que sí usa</li>
+          <li>Gastaste en tecnología y no puedes mostrar el retorno</li>
+          <li>Sientes que siempre estás "en proceso de transformación"</li>
+          <li>No tienes presupuesto para equivocarte dos veces</li></ul></div>
+        <div class="box"><span class="emoji">💼</span><h3>Trabajas dentro de una empresa</h3><ul>
+          <li>Te piden implementar algo nuevo cada dos años</li>
+          <li>Los proyectos se lanzan pero la adopción nunca llega</li>
+          <li>Eres responsable de que "esto funcione" sin que nadie defina qué significa eso</li>
+          <li>Tu trabajo es que el negocio funcione, no implementar tendencias</li>
+          <li>Pero tampoco puedes quedarte por fuera del cambio</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAPÍTULOS -->
+  <section class="center">
+    <div class="wrap">
+      <span class="eyebrow">Qué vas a encontrar</span>
+      <h2>Seis capítulos. Sin rodeos.</h2>
+      <p class="sub">Cada capítulo tiene casos reales, datos de las firmas de investigación más serias del mundo, y pasos concretos. Sin relleno.</p>
+      <div class="grid3" style="text-align:left">
+        <div class="box chap"><small>CAPÍTULO 1</small><h3>El Error Original: Comprar Antes de Definir el Problema</h3><p>Por qué la mayoría comienza mal: y no es por falta de presupuesto ni de tecnología.</p></div>
+        <div class="box chap"><small>CAPÍTULO 2</small><h3>Quién Decide Aquí (Y Por Qué Muchos No Se Atreven)</h3><p>Dónde se bloquea realmente la transformación y quién evita las decisiones que importan.</p></div>
+        <div class="box chap"><small>CAPÍTULO 3</small><h3>¿Por Qué el Excel Siempre Gana?</h3><p>Excel no es el enemigo. Es el síntoma. Y a veces es genuinamente mejor que lo que compraste.</p></div>
+        <div class="box chap"><small>CAPÍTULO 4</small><h3>Lo Que Nadie Dice en Voz Alta: El Costo Real del Error</h3><p>McKinsey, Gartner y Forrester llevan 30 años documentando estos números. Aquí en lenguaje de negocio.</p></div>
+        <div class="box chap"><small>CAPÍTULO 5</small><h3>Cuando Todo Empieza a Cambiar: La Mentalidad Correcta</h3><p>Qué hace diferente al 13-30% que sí lo logra. Gobernanza, change management, y la curva de adopción.</p></div>
+        <div class="box chap"><small>CAPÍTULO 6</small><h3>Tu Hoja de Ruta: Cómo Empezar Sin Mentirte</h3><p>Diagnóstico, primeros pasos sin gastar, y cómo saber si está funcionando. Para esta semana.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- POR QUÉ ES DIFERENTE -->
+  <section class="alt center">
+    <div class="wrap">
+      <span class="eyebrow">Por qué este libro es diferente</span>
+      <h2>Sin humo. Sin promesas. Con datos.</h2>
+      <p class="sub">La mayoría de los libros de transformación digital te venden una herramienta. Este te explica por qué las herramientas solas no funcionan, y qué hacer antes de comprarlas.</p>
+      <div class="grid3" style="text-align:left">
+        <div class="box"><span class="emoji">📊</span><h3>Datos de las firmas más serias</h3><p>McKinsey, Gartner, Forrester, Bain y BCG llevan décadas documentando por qué esto falla. Aquí los encontrarás en lenguaje de negocio.</p></div>
+        <div class="box"><span class="emoji">🏢</span><h3>Casos reales de empresas reales</h3><p>Startups de 4 personas hasta multinacionales top 3 del mundo. Los patrones son los mismos. Las lecciones, también.</p></div>
+        <div class="box"><span class="emoji">🌎</span><h3>Escrito para LATAM</h3><p>El mercado digital en LATAM crece al 17% anual. Equivocarse aquí cuesta más. Capital escaso, talento limitado, presupuesto ajustado.</p></div>
+        <div class="box"><span class="emoji">🎯</span><h3>Para quienes no somos programadores</h3><p>No necesitas saber de código. Necesitas tomar mejores decisiones antes de firmar contratos, y después de ellos.</p></div>
+        <div class="box"><span class="emoji">⚡</span><h3>Corto y accionable</h3><p>Menos de 100 páginas. Cada capítulo termina con algo concreto que puedes aplicar. Sin relleno académico.</p></div>
+        <div class="box"><span class="emoji">🔍</span><h3>Honesto cuando la respuesta es no</h3><p>A veces la mejor decisión es no implementar. Este libro te dirá cuándo esperar, cuándo avanzar, y cómo saber la diferencia.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AUTORA -->
+  <section>
+    <div class="wrap author">
+      <div>
+        <span class="eyebrow">¿Quién soy?</span>
+        <h3>Mayra Bastidas</h3>
+        <p class="role">Ayudo a tomar decisiones, no a comprar más herramientas</p>
+        <p style="color:var(--muted)">Consultora de Estrategia de Datos · Co-Fundadora de Synthesis Data</p>
+      </div>
+      <div>
+        <p>Soy economista, y desde el inicio de mi carrera los datos, los procesos y la gestión de proyectos se volvieron mi terreno. Más de 15 años después, he liderado equipos, sido parte de ellos, y acompañado transformaciones digitales en empresas de sectores que no se parecen en nada entre sí: farmacéutica (Pfizer, Boehringer), aviación (Air France-KLM), manufactura industrial (Hilti), y consultoría directa a PyMEs en LATAM y Europa. Y en todas estas, independientemente del tamaño, me encontré con problemas similares: líderes de equipo, gerentes generales y dueños que invertían en tecnología, esperaban que les cambiara el negocio, y terminaban con el mismo Excel de siempre, más caro y más frustrado que antes.</p>
+        <div class="chips"><span class="chip">Salesforce</span><span class="chip">Business Intelligence</span><span class="chip">Revenue Operations</span><span class="chip">IA aplicada</span><span class="chip">Pharma</span><span class="chip">LATAM</span><span class="chip">Bilingüe ES/EN</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CIERRE -->
+  <section class="final">
+    <div class="wrap">
+      <h2>¿Vas a decidir tú o vas a esperar que el tiempo decida?</h2>
+      <p class="sub" style="margin:0 auto 2rem">El ciclo de 20 años no va a romperse solo. Pero ahora tienes el diagnóstico, los datos, y el plan para hacerlo diferente.</p>
+      <a class="btn" href="https://www.amazon.es/dp/B0H88KRSXC" target="_blank" rel="noopener">Conseguir el libro →</a>
+      <p class="avail">Disponible en Amazon · Español</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">¿Hablamos de esto? <a href="mailto:mayra.bastidas@synthesis-data.com?subject=Hablemos">Escríbeme</a> · <a href="../">Más en la Library</a> · <a href="https://mayramb.github.io/">Mayra Bastidas</a></div>
+  </footer>
+</body>
+</html>
