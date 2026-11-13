@@ -1,0 +1,101 @@
+/* Library · Mayra Bastidas — mismo sistema visual que mayramb.github.io */
+:root {
+  --fuchsia: #E6007E;
+  --orange: #F7751E;
+  --yellow: #FEC02E;
+  --black: #0A0A0A;
+  --white: #FFFFFF;
+  --muted: rgba(255,255,255,0.65);
+  --line: rgba(255,255,255,0.08);
+  --gradient: linear-gradient(135deg, var(--fuchsia), var(--orange), var(--yellow));
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--black); color: var(--white); font-family: 'DM Sans', sans-serif; line-height: 1.6; }
+
+/* NAV */
+nav { position: sticky; top: 0; z-index: 10; display: flex; justify-content: space-between; align-items: center;
+  padding: 1.1rem 4rem; background: rgba(10,10,10,0.88); backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(230,0,126,0.2); }
+.nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 0.1em; text-decoration: none;
+  background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+nav ul { list-style: none; display: flex; gap: 2.2rem; }
+nav ul a { color: rgba(255,255,255,0.6); text-decoration: none; font-family: 'Space Mono', monospace;
+  font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; }
+nav ul a:hover, nav ul a.active { color: var(--fuchsia); }
+
+/* LAYOUT */
+.wrap { max-width: 1100px; margin: 0 auto; padding: 5rem 4rem; }
+.wrap.narrow { max-width: 820px; }
+.section-label { font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--fuchsia); margin-bottom: 1rem; display: flex; align-items: center; gap: 1rem; }
+.section-label::after { content: ''; height: 1px; width: 60px; background: rgba(230,0,126,0.3); }
+h1.big { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 7vw, 5.5rem); line-height: 0.95; letter-spacing: 0.02em; }
+h1.big span { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.lead { color: var(--muted); font-size: 1.1rem; max-width: 620px; margin: 1.5rem 0 3.5rem; }
+
+/* CARDS */
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+.card { display: block; text-decoration: none; color: inherit; background: rgba(255,255,255,0.04); border: 1px solid var(--line);
+  border-radius: 4px; padding: 2rem; position: relative; overflow: hidden; transition: all 0.3s; }
+.card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--gradient);
+  transform: scaleX(0); transform-origin: left; transition: transform 0.3s; }
+.card:hover { border-color: rgba(230,0,126,0.3); transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+.card:hover::before { transform: scaleX(1); }
+.card-num { font-family: 'Bebas Neue', sans-serif; font-size: 3.5rem; color: rgba(255,255,255,0.05); position: absolute; top: 1rem; right: 1.5rem; line-height: 1; }
+.card-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 0.03em; line-height: 1.1; margin: 1rem 0 0.6rem; }
+.card p { color: var(--muted); font-size: 0.95rem; }
+.card-go { margin-top: 1.4rem; font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--orange); }
+.tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.tag { font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.25rem 0.6rem;
+  border-radius: 2px; background: rgba(230,0,126,0.12); color: var(--fuchsia); border: 1px solid rgba(230,0,126,0.25); }
+.tag.orange { background: rgba(247,117,30,0.12); color: var(--orange); border-color: rgba(247,117,30,0.25); }
+.tag.yellow { background: rgba(254,192,46,0.12); color: var(--yellow); border-color: rgba(254,192,46,0.25); }
+
+/* BUTTONS */
+.btn { display: inline-block; padding: 0.85rem 2rem; font-family: 'Space Mono', monospace; font-size: 0.75rem; letter-spacing: 0.1em;
+  text-transform: uppercase; text-decoration: none; border-radius: 2px; transition: all 0.25s; cursor: pointer; border: none; }
+.btn-primary { background: var(--gradient); color: var(--black); font-weight: 700; }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(230,0,126,0.4); }
+.btn-outline { background: transparent; color: var(--white); border: 1px solid rgba(255,255,255,0.3); }
+.btn-outline:hover { border-color: var(--fuchsia); color: var(--fuchsia); }
+
+/* CTA */
+.cta { margin-top: 4rem; padding: 2.5rem; border-radius: 4px; position: relative; background: rgba(255,255,255,0.03); border: 1px solid rgba(230,0,126,0.3); }
+.cta h3 { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.03em; margin-bottom: 0.5rem; }
+.cta p { color: var(--muted); margin-bottom: 1.5rem; }
+.cta .btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+/* GUIDE CONTENT (markdown renderizado) */
+.doc h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.6rem, 6vw, 4rem); line-height: 1; letter-spacing: 0.02em; margin-bottom: 1rem; }
+.doc h2 { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; letter-spacing: 0.03em; margin: 3rem 0 1rem; color: var(--white); }
+.doc h3 { font-family: 'Space Mono', monospace; font-size: 0.95rem; color: var(--orange); margin: 2.2rem 0 0.7rem; }
+.doc p, .doc li { color: rgba(255,255,255,0.82); }
+.doc p { margin: 0.8rem 0; }
+.doc ul, .doc ol { margin: 0.8rem 0 0.8rem 1.4rem; }
+.doc li { margin: 0.35rem 0; }
+.doc strong { color: var(--white); }
+.doc a { color: var(--fuchsia); }
+.doc hr { border: none; height: 1px; background: var(--line); margin: 2.5rem 0; }
+.doc blockquote { border-left: 3px solid var(--fuchsia); background: rgba(230,0,126,0.06); padding: 0.8rem 1.2rem; margin: 1.2rem 0; border-radius: 0 4px 4px 0; }
+.doc blockquote p { margin: 0; }
+.doc table { width: 100%; border-collapse: collapse; margin: 1.2rem 0; font-size: 0.92rem; display: block; overflow-x: auto; }
+.doc th { font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--yellow); text-align: left; }
+.doc th, .doc td { padding: 0.65rem 0.8rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+.doc code { font-family: 'Space Mono', monospace; font-size: 0.85em; background: rgba(255,255,255,0.07); padding: 0.1rem 0.35rem; border-radius: 2px; }
+.doc pre { position: relative; background: #141414; border: 1px solid var(--line); border-radius: 4px; padding: 1.2rem; margin: 1.2rem 0; overflow-x: auto; }
+.doc pre code { background: none; padding: 0; font-size: 0.8rem; line-height: 1.55; white-space: pre-wrap; }
+.copy-btn { position: absolute; top: 0.6rem; right: 0.6rem; font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em;
+  text-transform: uppercase; padding: 0.35rem 0.7rem; background: var(--fuchsia); color: var(--white); border: none; border-radius: 2px; cursor: pointer; }
+.back { display: inline-block; margin-bottom: 2rem; font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.15em;
+  text-transform: uppercase; color: rgba(255,255,255,0.5); text-decoration: none; }
+.back:hover { color: var(--fuchsia); }
+
+footer { padding: 2rem 4rem; border-top: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+footer p, footer a { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: rgba(255,255,255,0.3); letter-spacing: 0.1em; text-decoration: none; }
+footer a:hover { color: var(--fuchsia); }
+
+@media (max-width: 760px) {
+  nav { padding: 1rem 1.4rem; } nav ul { gap: 1.2rem; }
+  .wrap { padding: 3rem 1.4rem; } footer { padding: 1.5rem 1.4rem; }
+}

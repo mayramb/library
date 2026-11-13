@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Library | Mayra Bastidas</title>
+  <meta name="description" content="Guías prácticas y gratuitas de IA, datos y cambio para personas y pymes." />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+  <nav>
+    <a class="nav-logo" href="https://mayramb.github.io/">Mayra Bastidas</a>
+    <ul>
+      <li><a href="https://mayramb.github.io/">Inicio</a></li>
+      <li><a class="active" href="./">Library</a></li>
+      <li><a href="https://synthesis-data.com">Synthesis Data</a></li>
+    </ul>
+  </nav>
+
+  <main class="wrap">
+    <div class="section-label">Library</div>
+    <h1 class="big">Guías prácticas<br><span>de IA y datos</span></h1>
+    <p class="lead">Lo que uso en mi día a día, explicado paso a paso para que lo puedas montar tú. Gratis y sin rodeos.</p>
+
+    <div class="grid" id="catalogo"></div>
+
+    <section class="cta">
+      <h3>¿Prefieres que te lo deje funcionando?</h3>
+      <p>Lo configuramos juntos en una sesión adaptada a ti o a tu negocio.</p>
+      <div class="btns">
+        <a class="btn btn-primary" href="mailto:mayra.bastidas@synthesis-data.com?subject=Quiero%20montarlo%20contigo">Escríbeme</a>
+        <a class="btn btn-outline" href="https://synthesis-data.com">Synthesis Data</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© Mayra Bastidas · Library</p>
+    <a href="https://github.com/mayramb/library">Ver en GitHub</a>
+  </footer>
+
+  <script>
+    const colores = ['', 'orange', 'yellow'];
+    fetch('catalogo.json').then(r => r.json()).then(items => {
+      document.getElementById('catalogo').innerHTML = items.map((g, i) => `
+        <a class="card" href="${g.link}">
+          <div class="card-num">${String(i + 1).padStart(2, '0')}</div>
+          <div class="tags">${g.etiquetas.map((t, j) => `<span class="tag ${colores[j % 3]}">${t}</span>`).join('')}</div>
+          <div class="card-title">${g.titulo}</div>
+          <p>${g.descripcion}</p>
+          <div class="card-go">Leer guía →</div>
+        </a>`).join('');
+    });
+  </script>
+</body>
+</html>

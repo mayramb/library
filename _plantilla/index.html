@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Library | Mayra Bastidas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/style.css" />
+  <script src="../assets/marked.min.js"></script>
+</head>
+<!--
+  VISOR DE GUÍAS — no hace falta editar este archivo.
+  Muestra el README.md de esta carpeta con el diseño de la Library.
+  Los enlaces a otros .md de la carpeta se abren aquí mismo (?doc=archivo.md).
+-->
+<body>
+  <nav>
+    <a class="nav-logo" href="https://mayramb.github.io/">Mayra Bastidas</a>
+    <ul>
+      <li><a href="https://mayramb.github.io/">Inicio</a></li>
+      <li><a class="active" href="../">Library</a></li>
+      <li><a href="https://synthesis-data.com">Synthesis Data</a></li>
+    </ul>
+  </nav>
+
+  <main class="wrap narrow">
+    <a class="back" id="back" href="../">← Volver a la Library</a>
+    <article class="doc" id="doc">Cargando…</article>
+
+    <section class="cta">
+      <h3>¿Prefieres que te lo deje funcionando?</h3>
+      <p>Lo configuramos juntos en una sesión de 90 minutos, adaptado a ti o a tu negocio.</p>
+      <div class="btns">
+        <a class="btn btn-primary" href="mailto:mayra.bastidas@synthesis-data.com?subject=Quiero%20montarlo%20contigo">Escríbeme</a>
+        <a class="btn btn-outline" href="https://synthesis-data.com">Synthesis Data</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© Mayra Bastidas · Library</p>
+    <a id="gh" href="https://github.com/mayramb/library">Ver en GitHub</a>
+  </footer>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const file = params.get('doc') || 'README.md';
+    if (params.get('doc')) { const b = document.getElementById('back'); b.href = './'; b.textContent = '← Volver a la guía'; }
+
+    function pintar(md) {
+      const el = document.getElementById('doc');
+      el.innerHTML = marked.parse(md);
+      // El pie y la llamada a la acción del README son para GitHub: aquí ya están en la página
+      el.querySelectorAll('[data-solo-github]').forEach(n => n.remove());
+      // Enlaces a .md locales → se abren dentro del visor
+      el.querySelectorAll('a[href]').forEach(a => {
+        const h = a.getAttribute('href');
+        if (/^\.?\/?[\w-]+\.md$/.test(h)) a.href = '?doc=' + h.replace(/^\.?\//, '');
+      });
+      // Botón "Copiar" en cada bloque de código
+      el.querySelectorAll('pre').forEach(pre => {
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn'; btn.textContent = 'Copiar';
+        btn.onclick = () => navigator.clipboard.writeText(pre.innerText.replace(/^Copiar/, '').trim())
+          .then(() => { btn.textContent = '¡Copiado!'; setTimeout(() => btn.textContent = 'Copiar', 1500); });
+        pre.appendChild(btn);
+      });
+      const h1 = el.querySelector('h1'); if (h1) document.title = h1.textContent + ' | Library';
+    }
+
+    if (window.__MD__) pintar(window.__MD__[file]);
+    else fetch(file).then(r => r.text()).then(pintar);
+  </script>
+</body>
+</html>

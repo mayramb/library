@@ -1,0 +1,16 @@
+[
+  {
+    "titulo": "Tu búsqueda de empleo en piloto automático",
+    "descripcion": "Claude busca ofertas cada día, las filtra con tus criterios, adapta tu CV y lo registra todo en un Excel.",
+    "link": "busqueda-empleo-ia/",
+    "etiquetas": ["IA", "Empleo", "Básico"],
+    "fecha": "2026-11"
+  },
+  {
+    "titulo": "Difusión de la innovación",
+    "descripcion": "Cómo se propaga el cambio en una organización (Rogers, 1962) y qué significa para adoptar IA y datos.",
+    "link": "https://mayramb.github.io/diffusion_innovation_theory/",
+    "etiquetas": ["Cambio", "Estrategia"],
+    "fecha": "2026-06"
+  }
+]
