@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Difusión de la Innovación</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0f;--card:#14141f;--green:#00e676;--red:#ff5252;--orange:#ff9100;--blue:#448aff;--purple:#b388ff;--t1:#f0f0f5;--t2:#8888aa;--t3:#555570}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--t1);overflow:hidden;height:100vh}
+.slide{position:absolute;top:0;left:0;width:100vw;height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:40px 50px;opacity:0;transform:translateX(80px);transition:all .7s cubic-bezier(.16,1,.3,1);pointer-events:none;background:var(--bg)}
+.slide.active{opacity:1;transform:translateX(0);pointer-events:all}
+.title{font-size:clamp(30px,4.5vw,54px);font-weight:800;letter-spacing:-1.5px;text-align:center;margin-bottom:12px}
+.sub{font-size:clamp(13px,1.5vw,17px);color:var(--t2);text-align:center;max-width:700px;line-height:1.5;margin-bottom:30px}
+.blue{color:var(--blue)}.green{color:var(--green)}.orange{color:var(--orange)}.red{color:var(--red)}.purple{color:var(--purple)}
+.glow{position:absolute;border-radius:50%;filter:blur(120px);pointer-events:none;opacity:.4}
+.g1{width:400px;height:400px;background:rgba(68,138,255,.15);top:-100px;right:-100px}
+.g2{width:350px;height:350px;background:rgba(179,136,255,.1);bottom:-100px;left:-100px}
+.nav{position:fixed;bottom:25px;left:50%;transform:translateX(-50%);display:flex;gap:10px;align-items:center;z-index:100;background:rgba(20,20,31,.85);backdrop-filter:blur(12px);padding:8px 20px;border-radius:50px;border:1px solid rgba(255,255,255,.06)}
+.dot{width:11px;height:11px;border-radius:50%;background:var(--t3);cursor:pointer;transition:.3s}
+.dot.active{background:var(--blue);box-shadow:0 0 12px rgba(68,138,255,.5);transform:scale(1.3)}
+.arr{background:none;border:1px solid var(--t3);color:var(--t1);width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;transition:.3s}
+.arr:hover{background:var(--blue);border-color:var(--blue)}
+.counter{position:fixed;top:25px;right:35px;font-family:'Space Mono',monospace;font-size:13px;color:var(--t3);z-index:100}
+.curve-path{fill:none;stroke:url(#curveGrad);stroke-width:4;stroke-linecap:round;stroke-dasharray:1200;stroke-dashoffset:1200;filter:drop-shadow(0 0 12px rgba(68,138,255,.4))}
+.slide.active .curve-path{animation:draw 2.5s ease-out .5s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.curve-area{opacity:0}
+.slide.active .curve-area{animation:areaIn 1.5s ease-out 2s forwards}
+@keyframes areaIn{to{opacity:.15}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+.adopter{opacity:0}
+.slide.active .adopter:nth-child(1){animation:fadeUp .6s ease-out 1.2s forwards}
+.slide.active .adopter:nth-child(2){animation:fadeUp .6s ease-out 1.6s forwards}
+.slide.active .adopter:nth-child(3){animation:fadeUp .6s ease-out 2s forwards}
+.slide.active .adopter:nth-child(4){animation:fadeUp .6s ease-out 2.4s forwards}
+.slide.active .adopter:nth-child(5){animation:fadeUp .6s ease-out 2.8s forwards}
+.slide-foot{font-size:13px;color:var(--t3);font-style:italic;text-align:center;margin-top:25px;opacity:0}
+.slide.active .slide-foot{animation:fadeUp .6s ease-out 3.2s forwards}
+
+/* ===== COVER SLIDE STYLES ===== */
+#cover{background:var(--bg);overflow:hidden}
+#diffCanvas{position:absolute;top:0;left:0;width:100%;height:100%;opacity:.7}
+.cover-content{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;text-align:center;gap:0}
+.cover-badge{display:inline-flex;align-items:center;gap:8px;padding:7px 18px;border-radius:30px;background:rgba(68,138,255,.12);border:1px solid rgba(68,138,255,.35);font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:var(--blue);letter-spacing:2px;text-transform:uppercase;margin-bottom:28px;opacity:0;animation:coverFadeUp .8s ease-out .3s forwards}
+.cover-title{font-size:clamp(38px,6vw,82px);font-weight:800;letter-spacing:-3px;line-height:1.05;margin-bottom:24px;opacity:0;animation:coverFadeUp .9s ease-out .6s forwards}
+.cover-title .word1{color:var(--t1)}
+.cover-title .word2{color:var(--t1)}
+.cover-title .accent{background:linear-gradient(135deg,var(--blue),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cover-tagline{font-size:clamp(14px,1.6vw,20px);color:var(--t2);max-width:600px;line-height:1.6;margin-bottom:40px;opacity:0;animation:coverFadeUp .8s ease-out .9s forwards}
+.cover-tagline strong{color:var(--t1)}
+.cover-btn{display:inline-flex;align-items:center;gap:10px;padding:16px 36px;border-radius:50px;background:linear-gradient(135deg,var(--blue),rgba(179,136,255,.8));border:none;color:#fff;font-family:'Sora',sans-serif;font-size:16px;font-weight:700;cursor:pointer;transition:all .3s;opacity:0;animation:coverFadeUp .8s ease-out 1.2s forwards;letter-spacing:.3px}
+.cover-btn:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 16px 40px rgba(68,138,255,.4)}
+.cover-btn .arrow{transition:transform .3s}
+.cover-btn:hover .arrow{transform:translateX(5px)}
+.cover-brand{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);font-family:'Space Mono',monospace;font-size:11px;color:var(--t3);letter-spacing:1px;opacity:0;animation:coverFadeUp .6s ease-out 1.5s forwards;white-space:nowrap}
+.cover-stat{display:flex;gap:40px;margin-bottom:36px;opacity:0;animation:coverFadeUp .8s ease-out 1s forwards}
+.cover-stat-item{text-align:center}
+.cover-stat-num{font-family:'Space Mono',monospace;font-size:28px;font-weight:700;color:var(--blue)}
+.cover-stat-label{font-size:11px;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
+@keyframes coverFadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
+</style>
+</head>
+<body>
+<a href="../" style="position:fixed;top:14px;left:14px;z-index:9999;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:rgba(10,10,10,.8);border:1px solid rgba(230,0,126,.5);padding:6px 12px;border-radius:2px;text-decoration:none">← Library</a>
+
+<div class="counter"><span id="cur">1</span> / 7</div>
+
+<div class="nav">
+  <button class="arr" onclick="prev()">←</button>
+  <div class="dot active" onclick="go(0)"></div>
+  <div class="dot" onclick="go(1)"></div>
+  <div class="dot" onclick="go(2)"></div>
+  <div class="dot" onclick="go(3)"></div>
+  <div class="dot" onclick="go(4)"></div>
+  <div class="dot" onclick="go(5)"></div>
+  <div class="dot" onclick="go(6)"></div>
+  <button class="arr" onclick="next()">→</button>
+</div>
+
+<!-- ======= COVER: PORTADA ======= -->
+<div class="slide active" id="cover">
+  <canvas id="diffCanvas"></canvas>
+  <div class="cover-content">
+    <div class="cover-badge">⬡ Gestión del Cambio · Synthesis Data</div>
+    <div class="cover-title">
+      <span class="word1">El Cambio<br>No Se Decreta.</span><br>
+      <span class="accent">Se Contagia.</span>
+    </div>
+    <div class="cover-tagline">
+      La teoría que explica por qué algunos equipos y perfiles abrazan el cambio y otros lo resisten hasta el final.
+    </div>
+    <button class="cover-btn" onclick="next()">
+      Descubrir por qué <span class="arrow">→</span>
+    </button>
+  </div>
+  <div class="cover-brand">Synthesis Data · synthesis-data.com</div>
+</div>
+
+<!-- ======= S1: 4 PILARES ======= -->
+<div class="slide">
+  <div class="glow g1"></div>
+  <div class="title">Los <span class="blue">4 Pilares</span> de la Difusión</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:850px;margin-top:20px">
+    <div style="padding:30px;border-radius:14px;background:linear-gradient(135deg,rgba(68,138,255,.12),rgba(68,138,255,.04));border:1px solid rgba(68,138,255,.15);text-align:center">
+      <div style="font-size:50px;margin-bottom:12px">💡</div>
+      <div style="font-size:18px;font-weight:700;margin-bottom:6px">La Innovación</div>
+      <div style="font-size:12px;color:var(--t2)">Lo nuevo que se quiere difundir</div>
+    </div>
+    <div style="padding:30px;border-radius:14px;background:linear-gradient(135deg,rgba(0,230,118,.12),rgba(0,230,118,.04));border:1px solid rgba(0,230,118,.15);text-align:center">
+      <div style="font-size:50px;margin-bottom:12px">📡</div>
+      <div style="font-size:18px;font-weight:700;margin-bottom:6px">Canales</div>
+      <div style="font-size:12px;color:var(--t2)">Medios por los que circula</div>
+    </div>
+    <div style="padding:30px;border-radius:14px;background:linear-gradient(135deg,rgba(255,145,0,.12),rgba(255,145,0,.04));border:1px solid rgba(255,145,0,.15);text-align:center">
+      <div style="font-size:50px;margin-bottom:12px">⏱️</div>
+      <div style="font-size:18px;font-weight:700;margin-bottom:6px">El Tiempo</div>
+      <div style="font-size:12px;color:var(--t2)">Velocidad de propagación</div>
+    </div>
+    <div style="padding:30px;border-radius:14px;background:linear-gradient(135deg,rgba(179,136,255,.12),rgba(179,136,255,.04));border:1px solid rgba(179,136,255,.15);text-align:center">
+      <div style="font-size:50px;margin-bottom:12px">👥</div>
+      <div style="font-size:18px;font-weight:700;margin-bottom:6px">Sistema Social</div>
+      <div style="font-size:12px;color:var(--t2)">El grupo donde se extiende</div>
+    </div>
+  </div>
+</div>
+
+<!-- ======= S2: CANALES ======= -->
+<div class="slide">
+  <div class="glow g2"></div>
+  <div class="title">Canales de <span class="orange">Difusión</span></div>
+  <div style="max-width:850px;width:100%;display:flex;flex-direction:column;gap:14px;margin-top:20px">
+    <div style="padding:20px 24px;border-radius:12px;background:linear-gradient(90deg,rgba(0,230,118,.15),transparent);border-left:4px solid var(--green);display:flex;gap:15px;align-items:center">
+      <div style="font-size:36px">📺</div>
+      <div><div style="font-weight:700;font-size:16px">Masivos</div><div style="font-size:13px;color:var(--t2)">TV, radio, prensa, internet → <strong style="color:var(--green)">INFORMAN</strong></div></div>
+    </div>
+    <div style="padding:20px 24px;border-radius:12px;background:linear-gradient(90deg,rgba(68,138,255,.15),transparent);border-left:4px solid var(--blue);display:flex;gap:15px;align-items:center">
+      <div style="font-size:36px">💬</div>
+      <div><div style="font-weight:700;font-size:16px">Interpersonales</div><div style="font-size:13px;color:var(--t2)">Boca a boca, recomendaciones → <strong style="color:var(--blue)">CONVENCEN</strong></div></div>
+    </div>
+    <div style="padding:20px 24px;border-radius:12px;background:linear-gradient(90deg,rgba(255,145,0,.15),transparent);border-left:4px solid var(--orange);display:flex;gap:15px;align-items:center">
+      <div style="font-size:36px">🌍</div>
+      <div><div style="font-weight:700;font-size:16px">Cosmopolitas</div><div style="font-size:13px;color:var(--t2)">Medios nacionales, redes profesionales → <strong style="color:var(--orange)">Novedades externas</strong></div></div>
+    </div>
+    <div style="padding:20px 24px;border-radius:12px;background:linear-gradient(90deg,rgba(179,136,255,.15),transparent);border-left:4px solid var(--purple);display:flex;gap:15px;align-items:center">
+      <div style="font-size:36px">🏘️</div>
+      <div><div style="font-weight:700;font-size:16px">Locales</div><div style="font-size:13px;color:var(--t2)">Vecinos, amigos, comunidad → <strong style="color:var(--purple)">Refuerzan en el grupo cercano</strong></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ======= S3: CURVA S ANIMADA ======= -->
+<div class="slide">
+  <div class="glow g1"></div>
+  <div class="glow g2"></div>
+  <div class="title">¿Por qué unos abrazan lo nuevo<br>y <span class="blue">otros no</span>?</div>
+  <div class="sub">La teoría de difusión de innovaciones propone que toda innovación se propaga siguiendo un patrón matemático: una <strong>distribución normal</strong>. Siempre los mismos grupos. Siempre el mismo orden.</div>
+
+  <div style="position:relative;width:90%;max-width:1000px;height:340px">
+    <svg width="100%" height="100%" viewBox="0 0 1000 340" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <linearGradient id="curveGrad" x1="0%" x2="100%">
+          <stop offset="0%" stop-color="#448aff"/>
+          <stop offset="25%" stop-color="#00e676"/>
+          <stop offset="50%" stop-color="#00e676"/>
+          <stop offset="75%" stop-color="#b388ff"/>
+          <stop offset="100%" stop-color="#ff5252"/>
+        </linearGradient>
+        <linearGradient id="areaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="rgba(68,138,255,.3)"/>
+          <stop offset="100%" stop-color="rgba(68,138,255,0)"/>
+        </linearGradient>
+      </defs>
+      <line x1="80" y1="300" x2="950" y2="300" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
+      <line x1="80" y1="200" x2="950" y2="200" stroke="rgba(255,255,255,.03)" stroke-width="1"/>
+      <line x1="80" y1="100" x2="950" y2="100" stroke="rgba(255,255,255,.03)" stroke-width="1"/>
+      <line x1="220" y1="30" x2="220" y2="300" stroke="rgba(255,255,255,.06)" stroke-width="1" stroke-dasharray="4,4"/>
+      <line x1="360" y1="30" x2="360" y2="300" stroke="rgba(255,255,255,.06)" stroke-width="1" stroke-dasharray="4,4"/>
+      <line x1="640" y1="30" x2="640" y2="300" stroke="rgba(255,255,255,.06)" stroke-width="1" stroke-dasharray="4,4"/>
+      <line x1="780" y1="30" x2="780" y2="300" stroke="rgba(255,255,255,.06)" stroke-width="1" stroke-dasharray="4,4"/>
+      <path class="curve-area" d="M80,300 C80,300 150,298 200,290 C250,282 280,260 320,220 C360,180 400,100 500,30 C600,100 640,180 680,220 C720,260 750,282 800,290 C850,298 920,300 950,300 Z" fill="url(#areaGrad)"/>
+      <path class="curve-path" d="M80,300 C120,298 170,295 220,285 C270,270 310,240 360,195 C410,145 450,75 500,30 C550,75 590,145 640,195 C690,240 730,270 780,285 C830,295 880,298 950,300"/>
+    </svg>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;width:90%;max-width:1000px;margin-top:10px">
+    <div class="adopter" style="text-align:center;width:18%">
+      <div style="font-size:26px">🚀</div>
+      <div style="font-family:'Space Mono',monospace;font-size:20px;font-weight:700;color:var(--blue)">2.5%</div>
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px">Innovadores</div>
+      <div style="font-size:10px;color:var(--t2)">Toleran el riesgo</div>
+    </div>
+    <div class="adopter" style="text-align:center;width:18%">
+      <div style="font-size:26px">🧭</div>
+      <div style="font-family:'Space Mono',monospace;font-size:20px;font-weight:700;color:var(--green)">13.5%</div>
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px">Adoptantes Tempranos</div>
+      <div style="font-size:10px;color:var(--t2)">Líderes de opinión</div>
+    </div>
+    <div class="adopter" style="text-align:center;width:18%">
+      <div style="font-size:26px">👥</div>
+      <div style="font-family:'Space Mono',monospace;font-size:20px;font-weight:700;color:var(--green)">34%</div>
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px">Mayoría Temprana</div>
+      <div style="font-size:10px;color:var(--t2)">Punto de inflexión</div>
+    </div>
+    <div class="adopter" style="text-align:center;width:18%">
+      <div style="font-size:26px">⏳</div>
+      <div style="font-family:'Space Mono',monospace;font-size:20px;font-weight:700;color:var(--purple)">34%</div>
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px">Mayoría Tardía</div>
+      <div style="font-size:10px;color:var(--t2)">Presión social</div>
+    </div>
+    <div class="adopter" style="text-align:center;width:18%">
+      <div style="font-size:26px">⚓</div>
+      <div style="font-family:'Space Mono',monospace;font-size:20px;font-weight:700;color:var(--red)">16%</div>
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px">Rezagados</div>
+      <div style="font-size:10px;color:var(--t2)">Resisten al final</div>
+    </div>
+  </div>
+  <div class="slide-foot">Rogers predijo que toda innovación sigue este patrón. Pero... ¿siempre se cumple?</div>
+</div>
+
+<!-- ======= S4: TIKTOK VS CRIPTO ======= -->
+<div class="slide">
+  <div class="glow g1"></div>
+  <div class="glow g2"></div>
+  <div class="title">La Teoría vs. <span class="blue">La Realidad</span></div>
+  <div class="sub">Dos tecnologías. Misma curva de partida. Destinos <strong>radicalmente distintos</strong>.</div>
+
+   <div style="display:grid;grid-template-columns:1fr 50px 1fr;width:95%;max-width:950px;height:46vh;max-height:340px;align-items:center">
+    <div style="background:linear-gradient(165deg,#0d2818,#0a1a12);border:1px solid rgba(0,230,118,.15);border-radius:14px;padding:20px;position:relative;height:100%">
+      <div style="display:inline-block;padding:4px 12px;border-radius:20px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;background:rgba(0,230,118,.15);color:var(--green);border:1px solid rgba(0,230,118,.3);margin-bottom:6px">✓ La curva funciona</div>
+      <div style="font-size:24px;font-weight:800;color:var(--green)">TikTok</div>
+      <div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--t2);margin-bottom:12px">2020 → 2025: 5 años</div>
+      <div style="position:relative;padding-left:20px">
+        <div style="position:absolute;left:4px;top:0;bottom:0;width:2px;background:var(--green)"></div>
+        <div style="margin:7px 0"><div style="font-size:10px;font-weight:700;color:var(--green)">2020</div><div style="font-size:9px;color:var(--t2)">Innovadores crean contenido</div></div>
+        <div style="margin:7px 0"><div style="font-size:10px;font-weight:700;color:var(--green)">2021</div><div style="font-size:9px;color:var(--t2)">Influencers legitiman</div></div>
+        <div style="margin:7px 0"><div style="font-size:10px;font-weight:700;color:var(--green)">2022-23</div><div style="font-size:9px;color:var(--t2)">Mayoría Temprana: todos están aquí</div></div>
+        <div style="margin:7px 0"><div style="font-size:10px;font-weight:700;color:var(--green)">2024-25</div><div style="font-size:9px;color:var(--t2)">Hasta los escépticos entraron</div></div>
+      </div>
+      <div style="position:absolute;bottom:12px;left:20px;right:20px;font-size:10px;font-weight:600;color:var(--green);background:rgba(0,230,118,.1);padding:8px;border-radius:8px;text-align:center">✓ Fácil, visible, confiable</div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:center"><div style="font-size:20px;font-weight:800;color:var(--t3)">VS</div></div>
+    <div style="background:linear-gradient(165deg,#2a1510,#1a0e0c);border:1px solid rgba(255,82,82,.15);border-radius:14px;padding:20px;position:relative;height:100%">
+      <div style="display:inline-block;padding:4px 12px;border-radius:20px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;background:rgba(255,82,82,.15);color:var(--red);border:1px solid rgba(255,82,82,.3);margin-bottom:6px">⚠ La curva falla</div>
+      <div style="font-size:24px;font-weight:800;color:var(--red)">Cripto</div>
+      <div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--t2);margin-bottom:12px">2009 → hoy: 17 años</div>
+      <div style="position:relative;padding-left:20px">
+        <div style="position:absolute;left:4px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--orange),var(--red))"></div>
+        <div style="margin:7px 0"><div style="font-size:10px;font-weight:700;color:var(--orange)">2009</div><div style="font-size:9px;color:var(--t2)">Satoshi, cypherpunks</div></div>
+        <div style="margin:7px 0"><div style="font-size:10px;font-weight:700;color:var(--orange)">2013-17</div><div style="font-size:9px;color:var(--t2)">Especuladores libertarios</div></div>
+        <div style="margin:7px 0"><div style="font-size:10px;font-weight:700;color:var(--red)">2018-22</div><div style="font-size:9px;color:var(--t2)">EL ABISMO: FTX, estafas</div></div>
+        <div style="margin:7px 0"><div style="font-size:10px;font-weight:700;color:var(--orange)">2023-hoy</div><div style="font-size:9px;color:var(--t2)">Estancada en nicho</div></div>
+      </div>
+      <div style="position:absolute;bottom:12px;left:20px;right:20px;font-size:10px;font-weight:600;color:var(--red);background:rgba(255,82,82,.1);padding:8px;border-radius:8px;text-align:center">✗ Complejo, volátil, desconfianza</div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 50px 1fr;width:95%;max-width:950px;margin-top:10px;align-items:end">
+    <div style="text-align:center">
+      <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--green);margin-bottom:2px">Adopción acumulada</div>
+      <svg viewBox="0 0 300 130" style="width:100%;max-width:400px;overflow:visible">
+        <text x="22" y="16" fill="rgba(255,255,255,.3)" font-size="8" text-anchor="end" font-family="Space Mono,monospace">100%</text>
+        <text x="22" y="70" fill="rgba(255,255,255,.15)" font-size="8" text-anchor="end" font-family="Space Mono,monospace">50%</text>
+        <text x="22" y="122" fill="rgba(255,255,255,.15)" font-size="8" text-anchor="end" font-family="Space Mono,monospace">0%</text>
+        <line x1="28" y1="12" x2="290" y2="12" stroke="rgba(255,255,255,.05)" stroke-width=".5"/>
+        <line x1="28" y1="65" x2="290" y2="65" stroke="rgba(255,255,255,.05)" stroke-width=".5" stroke-dasharray="4,4"/>
+        <line x1="28" y1="118" x2="290" y2="118" stroke="rgba(255,255,255,.08)" stroke-width=".5"/>
+        <path d="M28,118 C55,118 85,116 115,108 C145,94 165,65 185,35 C205,18 235,13 265,12 L290,12 L290,118 Z" fill="rgba(0,230,118,.07)"/>
+        <path d="M28,118 C55,118 85,116 115,108 C145,94 165,65 185,35 C205,18 235,13 265,12 L290,12" fill="none" stroke="var(--green)" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="380" stroke-dashoffset="380">
+          <animate attributeName="stroke-dashoffset" from="380" to="0" dur="2s" fill="freeze" begin="0.5s"/>
+        </path>
+        <circle cx="290" cy="12" r="3.5" fill="var(--green)" opacity="0">
+          <animate attributeName="opacity" from="0" to="1" dur="0.3s" fill="freeze" begin="2.3s"/>
+        </circle>
+        <text x="265" y="26" fill="var(--green)" font-size="10" font-weight="700" font-family="Space Mono,monospace" opacity="0">~95%
+          <animate attributeName="opacity" from="0" to="1" dur="0.3s" fill="freeze" begin="2.3s"/>
+        </text>
+        <text x="32" y="128" fill="rgba(255,255,255,.25)" font-size="7" font-family="Space Mono,monospace">2020</text>
+        <text x="265" y="128" fill="rgba(255,255,255,.25)" font-size="7" font-family="Space Mono,monospace" text-anchor="end">2025</text>
+      </svg>
+    </div>
+    <div></div>
+    <div style="text-align:center">
+      <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--red);margin-bottom:2px">Adopción acumulada</div>
+      <svg viewBox="0 0 300 130" style="width:100%;max-width:400px;overflow:visible">
+        <text x="22" y="16" fill="rgba(255,255,255,.15)" font-size="8" text-anchor="end" font-family="Space Mono,monospace">100%</text>
+        <text x="22" y="70" fill="rgba(255,255,255,.15)" font-size="8" text-anchor="end" font-family="Space Mono,monospace">50%</text>
+        <text x="22" y="122" fill="rgba(255,255,255,.15)" font-size="8" text-anchor="end" font-family="Space Mono,monospace">0%</text>
+        <line x1="28" y1="12" x2="290" y2="12" stroke="rgba(255,255,255,.05)" stroke-width=".5"/>
+        <line x1="28" y1="65" x2="290" y2="65" stroke="rgba(255,255,255,.05)" stroke-width=".5" stroke-dasharray="4,4"/>
+        <line x1="28" y1="118" x2="290" y2="118" stroke="rgba(255,255,255,.08)" stroke-width=".5"/>
+        <path d="M155,92 C175,75 210,35 245,18 L290,12" fill="none" stroke="rgba(255,82,82,.12)" stroke-width="2" stroke-dasharray="4,4" stroke-linecap="round"/>
+        <path d="M28,118 C55,118 75,117 105,112 C135,104 150,96 165,92 C185,88 215,87 260,87 L290,87 L290,118 Z" fill="rgba(255,82,82,.05)"/>
+        <path d="M28,118 C55,118 75,117 105,112 C135,104 150,96 165,92 C185,88 215,87 260,87 L290,87" fill="none" stroke="var(--red)" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="380" stroke-dashoffset="380">
+          <animate attributeName="stroke-dashoffset" from="380" to="0" dur="2s" fill="freeze" begin="0.5s"/>
+        </path>
+        <circle cx="290" cy="87" r="3.5" fill="var(--red)" opacity="0">
+          <animate attributeName="opacity" from="0" to="1" dur="0.3s" fill="freeze" begin="2.3s"/>
+        </circle>
+        <text x="263" y="82" fill="var(--red)" font-size="10" font-weight="700" font-family="Space Mono,monospace" opacity="0">~20%
+          <animate attributeName="opacity" from="0" to="1" dur="0.3s" fill="freeze" begin="2.3s"/>
+        </text>
+        <text x="32" y="128" fill="rgba(255,255,255,.25)" font-size="7" font-family="Space Mono,monospace">2009</text>
+        <text x="265" y="128" fill="rgba(255,255,255,.25)" font-size="7" font-family="Space Mono,monospace" text-anchor="end">2026</text>
+      </svg>
+    </div>
+  </div>
+  <div style="font-size:9px;color:var(--t3);margin-top:4px;text-align:center;font-style:italic">Campana = cuántos adoptan por período · Curva S = total acumulado de adopción</div>
+</div>
+
+<!-- ======= S5: 5 ATRIBUTOS ======= -->
+<div class="slide">
+  <div class="glow g1"></div>
+  <div class="title">Los <span class="orange">5 Atributos</span> de Adopción</div>
+  <div class="sub">¿Qué hace que la gente adopte algo nuevo?</div>
+  <div style="display:flex;gap:14px;max-width:1000px;margin-top:10px">
+    <div style="flex:1;padding:22px 14px;border-radius:12px;background:var(--card);border-top:3px solid var(--green);text-align:center">
+      <div style="font-size:30px;margin-bottom:10px">🏆</div>
+      <div style="font-size:13px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Ventaja Relativa</div>
+      <div style="font-size:12px;color:var(--t2)">¿Mejora mi vida?</div>
+    </div>
+    <div style="flex:1;padding:22px 14px;border-radius:12px;background:var(--card);border-top:3px solid var(--blue);text-align:center">
+      <div style="font-size:30px;margin-bottom:10px">🧩</div>
+      <div style="font-size:13px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Compatibilidad</div>
+      <div style="font-size:12px;color:var(--t2)">¿Encaja conmigo?</div>
+    </div>
+    <div style="flex:1;padding:22px 14px;border-radius:12px;background:var(--card);border-top:3px solid var(--blue);text-align:center">
+      <div style="font-size:30px;margin-bottom:10px">⚡</div>
+      <div style="font-size:13px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Complejidad</div>
+      <div style="font-size:12px;color:var(--t2)">¿Es fácil de usar?</div>
+    </div>
+    <div style="flex:1;padding:22px 14px;border-radius:12px;background:var(--card);border-top:3px solid var(--orange);text-align:center">
+      <div style="font-size:30px;margin-bottom:10px">🧪</div>
+      <div style="font-size:13px;font-weight:700;color:var(--orange);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Trialability</div>
+      <div style="font-size:12px;color:var(--t2)">¿Pruebo sin riesgo?</div>
+    </div>
+    <div style="flex:1;padding:22px 14px;border-radius:12px;background:var(--card);border-top:3px solid var(--purple);text-align:center">
+      <div style="font-size:30px;margin-bottom:10px">👁️</div>
+      <div style="font-size:13px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Observabilidad</div>
+      <div style="font-size:12px;color:var(--t2)">¿Veo resultados?</div>
+    </div>
+  </div>
+</div>
+
+<!-- ======= S7: CIERRE ======= -->
+<div class="slide">
+  <div class="glow g1"></div>
+  <div class="glow g2"></div>
+  <div class="title">¿Qué <span class="blue">aprendimos</span>?</div>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:1050px;margin-top:15px;align-items:stretch">
+    <div style="padding:22px;border-radius:14px;background:var(--card);border-top:3px solid var(--blue)">
+      <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--blue);margin-bottom:14px">Elementos Fundamentales</div>
+      <div style="font-size:13px;color:var(--t1);line-height:2">
+        <strong>La difusión es un proceso donde:</strong><br>
+        <span style="color:var(--green);font-weight:700">1)</span> una <span style="color:var(--blue);font-weight:700;text-decoration:underline">innovación</span><br>
+        <span style="color:var(--green);font-weight:700">2)</span> se comunica a través de ciertos <span style="color:var(--blue);font-weight:700;text-decoration:underline">canales</span><br>
+        <span style="color:#f0c040;font-weight:700">3)</span> a lo largo del <span style="color:#f0c040;font-weight:700;text-decoration:underline">tiempo</span><br>
+        <span style="color:#00bcd4;font-weight:700">4)</span> entre miembros de un <span style="color:#00bcd4;font-weight:700;text-decoration:underline">sistema social</span>
+      </div>
+    </div>
+
+    <div style="padding:22px;border-radius:14px;background:var(--card);border-top:3px solid var(--green)">
+      <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--green);margin-bottom:10px">Curva de Adopción</div>
+      <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+        <path d="M10,190 C10,190 40,188 70,180 C100,170 120,140 150,80 C180,140 200,170 230,180 C260,188 290,190 290,190 Z" fill="url(#bellGrad)" opacity=".6"/>
+        <line x1="70" y1="50" x2="70" y2="190" stroke="rgba(255,255,255,.15)" stroke-width="1"/>
+        <line x1="115" y1="50" x2="115" y2="190" stroke="rgba(255,255,255,.15)" stroke-width="1"/>
+        <line x1="185" y1="50" x2="185" y2="190" stroke="rgba(255,255,255,.15)" stroke-width="1"/>
+        <line x1="230" y1="50" x2="230" y2="190" stroke="rgba(255,255,255,.15)" stroke-width="1"/>
+        <defs>
+          <linearGradient id="bellGrad" x1="0%" x2="100%">
+            <stop offset="0%" stop-color="#ff5252"/>
+            <stop offset="20%" stop-color="#ff9100"/>
+            <stop offset="50%" stop-color="#00e676"/>
+            <stop offset="80%" stop-color="#448aff"/>
+            <stop offset="100%" stop-color="#b388ff"/>
+          </linearGradient>
+        </defs>
+        <path d="M10,190 C40,188 70,180 100,150 C120,130 135,100 150,80 C165,100 180,130 200,150 C230,180 260,188 290,190" fill="none" stroke="white" stroke-width="2"/>
+        <circle cx="38" cy="148" r="6" fill="#ff5252"/>
+        <line x1="40" y1="154" x2="36" y2="170" stroke="#ff5252" stroke-width="2"/>
+        <line x1="38" y1="160" x2="48" y2="153" stroke="#ff5252" stroke-width="2"/>
+        <line x1="38" y1="160" x2="47" y2="158" stroke="#ff5252" stroke-width="2"/>
+        <line x1="36" y1="170" x2="28" y2="176" stroke="#ff5252" stroke-width="2"/>
+        <line x1="36" y1="170" x2="44" y2="180" stroke="#ff5252" stroke-width="2"/>
+        <circle cx="92" cy="118" r="6" fill="#ff9100"/>
+        <line x1="92" y1="124" x2="90" y2="140" stroke="#ff9100" stroke-width="2"/>
+        <line x1="91" y1="132" x2="84" y2="126" stroke="#ff9100" stroke-width="2"/>
+        <line x1="91" y1="132" x2="99" y2="127" stroke="#ff9100" stroke-width="2"/>
+        <line x1="90" y1="140" x2="84" y2="150" stroke="#ff9100" stroke-width="2"/>
+        <line x1="90" y1="140" x2="96" y2="150" stroke="#ff9100" stroke-width="2"/>
+        <circle cx="150" cy="50" r="7" fill="#00e676"/>
+        <line x1="150" y1="57" x2="150" y2="74" stroke="#00e676" stroke-width="2"/>
+        <line x1="150" y1="63" x2="140" y2="57" stroke="#00e676" stroke-width="2"/>
+        <line x1="150" y1="63" x2="160" y2="57" stroke="#00e676" stroke-width="2"/>
+        <line x1="150" y1="74" x2="144" y2="84" stroke="#00e676" stroke-width="2"/>
+        <line x1="150" y1="74" x2="156" y2="84" stroke="#00e676" stroke-width="2"/>
+        <circle cx="210" cy="118" r="6" fill="#448aff"/>
+        <line x1="210" y1="124" x2="210" y2="142" stroke="#448aff" stroke-width="2"/>
+        <line x1="210" y1="132" x2="204" y2="140" stroke="#448aff" stroke-width="2"/>
+        <line x1="210" y1="132" x2="216" y2="140" stroke="#448aff" stroke-width="2"/>
+        <line x1="210" y1="142" x2="206" y2="152" stroke="#448aff" stroke-width="2"/>
+        <line x1="210" y1="142" x2="214" y2="152" stroke="#448aff" stroke-width="2"/>
+        <circle cx="262" cy="152" r="6" fill="#b388ff"/>
+        <line x1="260" y1="157" x2="256" y2="174" stroke="#b388ff" stroke-width="2"/>
+        <line x1="258" y1="165" x2="250" y2="170" stroke="#b388ff" stroke-width="2"/>
+        <line x1="258" y1="165" x2="252" y2="172" stroke="#b388ff" stroke-width="2"/>
+        <line x1="256" y1="174" x2="252" y2="183" stroke="#b388ff" stroke-width="2"/>
+        <line x1="256" y1="174" x2="260" y2="184" stroke="#b388ff" stroke-width="2"/>
+        <text x="40" y="197" font-size="7" fill="#ff5252" text-anchor="middle" font-family="Sora">2.5%</text>
+        <text x="92" y="197" font-size="7" fill="#ff9100" text-anchor="middle" font-family="Sora">13.5%</text>
+        <text x="150" y="197" font-size="7" fill="#00e676" text-anchor="middle" font-family="Sora">34%</text>
+        <text x="208" y="197" font-size="7" fill="#448aff" text-anchor="middle" font-family="Sora">34%</text>
+        <text x="260" y="197" font-size="7" fill="#b388ff" text-anchor="middle" font-family="Sora">16%</text>
+      </svg>
+    </div>
+
+    <div style="padding:22px;border-radius:14px;background:var(--card);border-top:3px solid var(--orange)">
+      <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--orange);margin-bottom:10px">Características de Éxito</div>
+      <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+        <circle cx="30" cy="45" r="10" fill="none" stroke="#aaa" stroke-width="1.5"/>
+        <line x1="30" y1="55" x2="30" y2="80" stroke="#aaa" stroke-width="2"/>
+        <line x1="30" y1="65" x2="18" y2="72" stroke="#aaa" stroke-width="2"/>
+        <line x1="30" y1="65" x2="42" y2="58" stroke="#aaa" stroke-width="2"/>
+        <line x1="30" y1="80" x2="24" y2="95" stroke="#aaa" stroke-width="2"/>
+        <line x1="30" y1="80" x2="36" y2="95" stroke="#aaa" stroke-width="2"/>
+        <circle cx="42" cy="28" r="12" fill="none" stroke="#00e676" stroke-width="1.5"/>
+        <text x="42" y="32" font-size="12" fill="#00e676" text-anchor="middle" font-weight="bold">★</text>
+        <circle cx="36" cy="38" r="2" fill="#00e676"/>
+        <text x="30" y="112" font-size="7.5" fill="#00e676" text-anchor="middle" font-family="Sora" font-weight="600">Ventaja</text>
+        <circle cx="90" cy="45" r="10" fill="none" stroke="#aaa" stroke-width="1.5"/>
+        <line x1="90" y1="55" x2="90" y2="80" stroke="#aaa" stroke-width="2"/>
+        <line x1="90" y1="65" x2="78" y2="60" stroke="#aaa" stroke-width="2"/>
+        <line x1="90" y1="65" x2="102" y2="60" stroke="#aaa" stroke-width="2"/>
+        <line x1="90" y1="80" x2="84" y2="95" stroke="#aaa" stroke-width="2"/>
+        <line x1="90" y1="80" x2="96" y2="95" stroke="#aaa" stroke-width="2"/>
+        <circle cx="102" cy="28" r="12" fill="none" stroke="#448aff" stroke-width="1.5"/>
+        <text x="102" y="33" font-size="14" fill="#448aff" text-anchor="middle">♡</text>
+        <circle cx="96" cy="38" r="2" fill="#448aff"/>
+        <text x="90" y="112" font-size="7.5" fill="#448aff" text-anchor="middle" font-family="Sora" font-weight="600">Compatible</text>
+        <circle cx="150" cy="45" r="10" fill="none" stroke="#aaa" stroke-width="1.5"/>
+        <line x1="150" y1="55" x2="150" y2="80" stroke="#aaa" stroke-width="2"/>
+        <line x1="150" y1="65" x2="138" y2="70" stroke="#aaa" stroke-width="2"/>
+        <line x1="150" y1="65" x2="162" y2="70" stroke="#aaa" stroke-width="2"/>
+        <line x1="150" y1="80" x2="144" y2="95" stroke="#aaa" stroke-width="2"/>
+        <line x1="150" y1="80" x2="156" y2="95" stroke="#aaa" stroke-width="2"/>
+        <circle cx="162" cy="28" r="12" fill="none" stroke="#00bcd4" stroke-width="1.5"/>
+        <text x="162" y="33" font-size="13" fill="#00bcd4" text-anchor="middle" font-weight="bold">?</text>
+        <circle cx="156" cy="38" r="2" fill="#00bcd4"/>
+        <text x="150" y="112" font-size="7.5" fill="#00bcd4" text-anchor="middle" font-family="Sora" font-weight="600">Simple</text>
+        <circle cx="210" cy="45" r="10" fill="none" stroke="#aaa" stroke-width="1.5"/>
+        <line x1="210" y1="55" x2="210" y2="80" stroke="#aaa" stroke-width="2"/>
+        <line x1="210" y1="65" x2="198" y2="62" stroke="#aaa" stroke-width="2"/>
+        <line x1="210" y1="65" x2="222" y2="58" stroke="#aaa" stroke-width="2"/>
+        <line x1="210" y1="80" x2="204" y2="95" stroke="#aaa" stroke-width="2"/>
+        <line x1="210" y1="80" x2="216" y2="95" stroke="#aaa" stroke-width="2"/>
+        <circle cx="222" cy="28" r="12" fill="none" stroke="#ff9100" stroke-width="1.5"/>
+        <text x="222" y="33" font-size="13" fill="#ff9100" text-anchor="middle" font-weight="bold">⚙</text>
+        <circle cx="216" cy="38" r="2" fill="#ff9100"/>
+        <text x="210" y="112" font-size="7.5" fill="#ff9100" text-anchor="middle" font-family="Sora" font-weight="600">Prueba</text>
+        <circle cx="270" cy="45" r="10" fill="none" stroke="#aaa" stroke-width="1.5"/>
+        <line x1="270" y1="55" x2="270" y2="80" stroke="#aaa" stroke-width="2"/>
+        <line x1="270" y1="65" x2="258" y2="60" stroke="#aaa" stroke-width="2"/>
+        <line x1="270" y1="65" x2="282" y2="58" stroke="#aaa" stroke-width="2"/>
+        <line x1="270" y1="80" x2="264" y2="95" stroke="#aaa" stroke-width="2"/>
+        <line x1="270" y1="80" x2="276" y2="95" stroke="#aaa" stroke-width="2"/>
+        <circle cx="282" cy="28" r="12" fill="none" stroke="#b388ff" stroke-width="1.5"/>
+        <text x="282" y="33" font-size="13" fill="#b388ff" text-anchor="middle" font-weight="bold">👁</text>
+        <circle cx="276" cy="38" r="2" fill="#b388ff"/>
+        <text x="270" y="112" font-size="7.5" fill="#b388ff" text-anchor="middle" font-family="Sora" font-weight="600">Observable</text>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<script>
+let c=0;const s=document.querySelectorAll('.slide'),d=document.querySelectorAll('.dot'),n=document.getElementById('cur');
+function go(i){if(i===c||i<0||i>=s.length)return;s[c].classList.remove('active');c=i;s[c].classList.add('active');d.forEach((x,j)=>x.classList.toggle('active',j===c));n.textContent=c+1}
+function next(){go(c+1)}function prev(){go(c-1)}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' ')next();if(e.key==='ArrowLeft')prev()});
+
+/* ===== DIFFUSION CANVAS ANIMATION ===== */
+(function(){
+  const cv=document.getElementById('diffCanvas');
+  if(!cv)return;
+  const ctx=cv.getContext('2d');
+  let W,H,nodes=[],animFrame,phase=0,tick=0;
+
+  function resize(){W=cv.width=cv.offsetWidth;H=cv.height=cv.offsetHeight;buildNodes()}
+
+  function buildNodes(){
+    nodes=[];
+    const cols=18,rows=12;
+    for(let r=0;r<rows;r++){
+      for(let col=0;col<cols;col++){
+        const jitter=()=>(Math.random()-.5)*38;
+        nodes.push({
+          x: (col+.5)*(W/cols)+jitter(),
+          y: (r+.5)*(H/rows)+jitter(),
+          active:false, wave:-1, alpha:0,
+          r: 3+Math.random()*2.5
+        });
+      }
+    }
+    // mark center node
+    let cx=W/2,cy=H/2,best=9e9,bi=0;
+    nodes.forEach((n,i)=>{const d=Math.hypot(n.x-cx,n.y-cy);if(d<best){best=d;bi=i}});
+    nodes[bi].active=true;nodes[bi].wave=0;nodes[bi].alpha=1;
+    // precompute edges
+    nodes.forEach((n,i)=>{
+      n.neighbors=[];
+      nodes.forEach((m,j)=>{
+        if(i!==j&&Math.hypot(n.x-m.x,n.y-m.y)<W/cols*1.9)n.neighbors.push(j);
+      });
+    });
+    tick=0;phase=0;
+  }
+
+  const COLORS=[
+    [68,138,255],   // blue - innovators
+    [0,230,118],    // green - early adopters
+    [0,230,118],    // green - early majority
+    [179,136,255],  // purple - late majority
+    [255,145,0]     // orange - laggards
+  ];
+
+  function getColor(wave){
+    const idx=Math.min(Math.floor(wave/4),COLORS.length-1);
+    return COLORS[idx];
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    tick++;
+
+    // Spread every N ticks
+    if(tick%18===0){
+      const newWave=[];
+      nodes.forEach((n,i)=>{
+        if(n.active){
+          n.neighbors.forEach(j=>{
+            if(!nodes[j].active&&Math.random()>.2){
+              newWave.push({i:j,wave:n.wave+1});
+            }
+          });
+        }
+      });
+      newWave.forEach(({i,wave})=>{if(!nodes[i].active){nodes[i].active=true;nodes[i].wave=wave;}});
+      // restart when all active
+      const allActive=nodes.every(n=>n.active);
+      if(allActive){setTimeout(()=>{buildNodes();},1400);}
+    }
+
+    // Smooth alpha
+    nodes.forEach(n=>{
+      if(n.active) n.alpha=Math.min(1,n.alpha+.06);
+    });
+
+    // Draw edges
+    nodes.forEach((n,i)=>{
+      if(!n.active||n.alpha<.1)return;
+      n.neighbors.forEach(j=>{
+        const m=nodes[j];
+        if(!m.active||m.alpha<.1)return;
+        const a=Math.min(n.alpha,m.alpha)*.18;
+        const [r,g,b]=getColor(Math.min(n.wave,m.wave));
+        ctx.strokeStyle=`rgba(${r},${g},${b},${a})`;
+        ctx.lineWidth=.8;
+        ctx.beginPath();ctx.moveTo(n.x,n.y);ctx.lineTo(m.x,m.y);ctx.stroke();
+      });
+    });
+
+    // Draw nodes
+    nodes.forEach(n=>{
+      const a=n.active?n.alpha:.06;
+      if(a<.02)return;
+      const [r,g,b]=n.active?getColor(n.wave):[120,120,160];
+      // glow
+      if(n.active&&n.alpha>.5){
+        const gr=ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,n.r*4);
+        gr.addColorStop(0,`rgba(${r},${g},${b},${n.alpha*.25})`);
+        gr.addColorStop(1,`rgba(${r},${g},${b},0)`);
+        ctx.fillStyle=gr;
+        ctx.beginPath();ctx.arc(n.x,n.y,n.r*4,0,Math.PI*2);ctx.fill();
+      }
+      ctx.fillStyle=`rgba(${r},${g},${b},${a})`;
+      ctx.beginPath();ctx.arc(n.x,n.y,n.r,0,Math.PI*2);ctx.fill();
+    });
+
+    animFrame=requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize',()=>{clearTimeout(window._rt);window._rt=setTimeout(resize,200)});
+  resize();
+  draw();
+})();
+</script>
+</body>
+</html>
