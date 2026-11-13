@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Library | Mayra Bastidas</title>
-  <meta name="description" content="Guías prácticas y gratuitas de IA, datos y cambio para personas y pymes." />
+  <meta name="description" content="Guías, ideas y reflexiones de Mayra Bastidas sobre tecnología, trabajo y cambio." />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/style.css" />
 </head>
@@ -20,16 +20,16 @@
 
   <main class="wrap">
     <div class="section-label">Library</div>
-    <h1 class="big">Guías prácticas<br><span>de IA y datos</span></h1>
-    <p class="lead">Lo que uso en mi día a día, explicado paso a paso para que lo puedas montar tú. Gratis y sin rodeos.</p>
+    <h1 class="big">Lo que aprendo,<br><span>lo comparto</span></h1>
+    <p class="lead">Guías, ideas y reflexiones sobre tecnología, trabajo, cambio y lo que vaya surgiendo. Sin filtros corporativos y sin rodeos.</p>
 
     <div class="grid" id="catalogo"></div>
 
     <section class="cta">
-      <h3>¿Prefieres que te lo deje funcionando?</h3>
-      <p>Lo configuramos juntos en una sesión adaptada a ti o a tu negocio.</p>
+      <h3>¿Hablamos de esto?</h3>
+      <p>Si algo de aquí te resonó, escríbeme: una pregunta, una idea o simplemente una conversación.</p>
       <div class="btns">
-        <a class="btn btn-primary" href="mailto:mayra.bastidas@synthesis-data.com?subject=Quiero%20montarlo%20contigo">Escríbeme</a>
+        <a class="btn btn-primary" href="mailto:mayra.bastidas@synthesis-data.com?subject=Hablemos">Escríbeme</a>
         <a class="btn btn-outline" href="https://synthesis-data.com">Synthesis Data</a>
       </div>
     </section>
@@ -49,7 +49,7 @@
           <div class="tags">${g.etiquetas.map((t, j) => `<span class="tag ${colores[j % 3]}">${t}</span>`).join('')}</div>
           <div class="card-title">${g.titulo}</div>
           <p>${g.descripcion}</p>
-          <div class="card-go">Leer guía →</div>
+          <div class="card-go">Leer →</div>
         </a>`).join('');
     });
   </script>

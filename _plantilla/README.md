@@ -41,9 +41,9 @@
 
 <div data-solo-github>
 
-### ¿Prefieres que te lo deje funcionando?
-Lo configuramos juntos en una sesión de 90 minutos, adaptado a ti o a tu negocio.
-👉 [Escríbeme](mailto:mayra.bastidas@synthesis-data.com?subject=Quiero%20montarlo%20contigo) · [Synthesis Data](https://synthesis-data.com) · [Más guías en la Library](https://mayramb.github.io/library/)
+### ¿Hablamos de esto?
+Si algo de aquí te resonó, escríbeme: una pregunta, una idea o simplemente una conversación.
+👉 [Escríbeme](mailto:mayra.bastidas@synthesis-data.com?subject=Hablemos) · [Synthesis Data](https://synthesis-data.com) · [Más en la Library](https://mayramb.github.io/library/)
 
 </div>
 

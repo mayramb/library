@@ -1,6 +1,6 @@
 # 📚 Library · Mayra Bastidas
 
-Guías prácticas y gratuitas de IA, datos y gestión del cambio.
+Guías, ideas y reflexiones sobre tecnología, trabajo, cambio y lo que vaya surgiendo.
 
 🌐 **Versión web (recomendada):** https://mayramb.github.io/library/
 
@@ -33,4 +33,4 @@ library/
 
 ---
 
-¿Quieres que te lo deje funcionando? [Escríbeme](mailto:mayra.bastidas@synthesis-data.com) · [Synthesis Data](https://synthesis-data.com)
+¿Hablamos de esto? [Escríbeme](mailto:mayra.bastidas@synthesis-data.com) · [Synthesis Data](https://synthesis-data.com)
