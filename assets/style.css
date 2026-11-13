@@ -34,6 +34,11 @@ h1.big { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 7vw, 5.5r
 h1.big span { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 .lead { color: var(--muted); font-size: 1.1rem; max-width: 620px; margin: 1.5rem 0 3.5rem; }
 
+/* HERO */
+.hero { display: grid; grid-template-columns: 1.3fr 1fr; align-items: center; gap: 2rem; }
+.hero .lead { margin-bottom: 3.5rem; }
+.hero-img { width: 100%; max-width: 420px; justify-self: end; filter: drop-shadow(0 0 60px rgba(230,0,126,0.25)); }
+
 /* CARDS */
 .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
 .card { display: block; text-decoration: none; color: inherit; background: rgba(255,255,255,0.04); border: 1px solid var(--line);
@@ -62,6 +67,8 @@ h1.big span { background: var(--gradient); -webkit-background-clip: text; -webki
 
 /* CTA */
 .cta { margin-top: 4rem; padding: 2.5rem; border-radius: 4px; position: relative; background: rgba(255,255,255,0.03); border: 1px solid rgba(230,0,126,0.3); }
+.cta { overflow: hidden; }
+.cta-marca { position: absolute; right: 2rem; top: 50%; transform: translateY(-50%); height: 70%; opacity: 0.9; pointer-events: none; }
 .cta h3 { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.03em; margin-bottom: 0.5rem; }
 .cta p { color: var(--muted); margin-bottom: 1.5rem; }
 .cta .btns { display: flex; gap: 1rem; flex-wrap: wrap; }
@@ -96,6 +103,8 @@ footer p, footer a { font-family: 'Space Mono', monospace; font-size: 0.65rem; c
 footer a:hover { color: var(--fuchsia); }
 
 @media (max-width: 760px) {
+  .hero { grid-template-columns: 1fr; } .hero-img { justify-self: start; max-width: 260px; margin-bottom: 2rem; order: -1; }
+  .cta-marca { height: 40%; top: 1.5rem; transform: none; opacity: 0.25; }
   nav { padding: 1rem 1.4rem; } nav ul { gap: 1.2rem; }
   .wrap { padding: 3rem 1.4rem; } footer { padding: 1.5rem 1.4rem; }
 }
