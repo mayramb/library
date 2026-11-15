@@ -56,8 +56,9 @@ Descarta la oferta si cumple alguno:
    sigue abierta. Prioriza los últimos 14 días. Descarta lo "ya cubierto".
 
 == 9. REGLAS DEL CV ==
-- Parte SIEMPRE del maestro: [CARPETA]/CV_[Nombre]_ATS_Espanol.docx o _English.docx.
-  Ábrelo y edítalo; nunca lo crees desde cero.
+- Parte SIEMPRE del CV maestro en el idioma de la oferta:
+  [CARPETA]/CV_[Nombre]_ATS_[IDIOMA].docx (uno por cada idioma que uses).
+  Ábrelo y edítalo; nunca lo crees desde cero ni añadas experiencia que no esté ahí.
 - Idioma del CV = idioma de la oferta.
 - El encabezado y los datos de contacto no se tocan.
 - Elige qué logros destacar según la oferta; máximo [N] viñetas por puesto.

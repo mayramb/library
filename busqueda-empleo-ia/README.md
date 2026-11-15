@@ -1,6 +1,6 @@
 # 🔎 Tu búsqueda de empleo en piloto automático con IA
 
-**Cada madrugada, Claude busca ofertas, descarta las que no encajan, te prepara un CV adaptado a cada una y lo registra todo en un Excel.**
+**Cada día, a la hora que elijas, Claude busca ofertas, descarta las que no encajan, te prepara un CV adaptado a cada una y lo registra todo en un Excel.**
 
 > La IA investiga y prepara. **Tú decides y postulas.** Nunca aplica ni contacta a nadie.
 
@@ -22,10 +22,10 @@
 | Pieza | Para qué |
 |---|---|
 | **Claude (app de escritorio)** con una carpeta conectada | Lee tus archivos y escribe CVs y Excel |
-| **Tarea programada** diaria | Ejecuta el prompt sola, de madrugada |
+| **Tarea programada** diaria | Ejecuta el prompt sola, a la hora que tú elijas |
 | **Conector de empleo** (Indeed) + búsqueda web | Fuentes de ofertas |
-| **CV maestro ATS** (uno por idioma) | La base de todos los CVs. Nunca se crea desde cero |
-| **Archivo de HECHOS** (.md) | Tus logros y cifras reales. Evita que la IA invente |
+| **CV maestro ATS** | Tu CV completo y actualizado. La IA solo elige y adapta lo que ya está ahí |
+| **Archivo de HECHOS** (.md) | Tus logros y cifras reales. Evita que la IA invente. Mejora con el uso |
 | **Excel de seguimiento** | Registro para medir qué funciona |
 
 ---
@@ -35,15 +35,15 @@
 ### Paso 1 · Prepara tu carpeta
 ```
 📁 Busqueda-Empleo/
-   ├── CV_[Nombre]_ATS_Espanol.docx
-   ├── CV_[Nombre]_ATS_English.docx
+   ├── CV_[Nombre]_ATS.docx
    ├── HECHOS_[Nombre]_para_CVs.md
    └── Seguimiento_Ofertas.xlsx
 ```
-- **CV maestro ATS:** texto plano, sin tablas ni columnas ni iconos, contacto en el cuerpo (no en el encabezado).
+- **CV maestro ATS:** dedica tiempo a dejarlo **actualizado y completo**, con todos tus puestos, logros y fortalezas. La IA no crea experiencia: toma la tuya real y elige lo más relevante para cada oferta. Formato plano: sin tablas, columnas ni iconos, y el contacto en el cuerpo (no en el encabezado).
+  Necesitas **un CV maestro por idioma** en el que quieras postular (ej. `CV_[Nombre]_ATS_ES.docx` y `CV_[Nombre]_ATS_EN.docx`). Si solo buscas en un idioma, con uno basta.
 - **Archivo de HECHOS:** tus experiencias con cifras verificadas, herramientas que sí dominas, certificaciones que sí tienes y una sección **"Datos prohibidos"** con lo que la IA no debe afirmar nunca.
 
-> 💡 El archivo de HECHOS es la pieza que más calidad aporta. Cuanto más concreto, menos inventa la IA.
+> 💡 El archivo de HECHOS es la pieza que más calidad aporta, y **se construye con el uso**: no tiene que estar perfecto el primer día. Cada vez que la IA exagere o invente algo en un CV, añádelo a "Datos prohibidos". En pocas semanas deja de pasar.
 
 ### Paso 2 · Arma el Excel de seguimiento
 Crea una **tabla de Excel con nombre** (Insertar → Tabla, nómbrala `Tabla1`) con estas columnas:
@@ -83,9 +83,9 @@ Antes, define en un papel:
 Pega el prompt en un chat normal de Claude con la carpeta conectada y ejecútalo **una vez**. Revisa que las ofertas encajan, que los links funcionan y que el CV no inventa nada. Ajusta y repite.
 
 ### Paso 5 · Prográmalo
-Pídele a Claude: *"Crea una tarea programada diaria a las 4:00 con este prompt"*. Puedes pausarla o editarla cuando quieras.
+Pídele a Claude: *"Crea una tarea programada diaria a las [HORA] con este prompt"*. Elige la hora que te venga mejor; yo la puse de madrugada para tenerlo todo listo al despertar. Puedes pausarla o editarla cuando quieras.
 
-> ⚠️ Deja el Excel **cerrado** por la noche. Si está abierto, la IA no puede escribir en él.
+> ⚠️ Deja el Excel **cerrado** a la hora de la tarea. Si está abierto, la IA no puede escribir en él.
 
 ---
 
