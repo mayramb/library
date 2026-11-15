@@ -89,7 +89,7 @@ Pídele a Claude: *"Crea una tarea programada diaria a las [HORA] con este promp
 
 ---
 
-## Lecciones aprendidas (4 meses de uso)
+## Lecciones aprendidas
 
 | Problema | Solución (ya incluida en el prompt) |
 |---|---|
@@ -98,9 +98,6 @@ Pídele a Claude: *"Crea una tarea programada diaria a las [HORA] con este promp
 | Se colaban ofertas caducadas | Descartar lo publicado hace más de 45 días |
 | Agregadores cambiaban títulos o modalidad | Verificar en la web de la empresa o LinkedIn |
 | Escribía la fecha de publicación, no la de búsqueda | Regla explícita de fecha |
-| Escribía en filas vacías equivocadas del Excel | Buscar la última fila por la columna Empresa |
-| Decía que guardó el Excel sin hacerlo | Reabrir, contar filas y, si falla, guardar un CSV |
-| Términos amplios llenaban el informe de ruido | Solo títulos con calificador |
 
 ### 📊 La lección más valiosa: mide y reasigna
 Al mes revisé el Excel: un carril tenía **50 % de respuesta** y el otro **26 %**, pero la tarea traía 3 veces más ofertas del peor. El problema era de configuración, no de mercado. Cambié el prompt para dedicar ~65 % de la búsqueda al carril que funcionaba.
